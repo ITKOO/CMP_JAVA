@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.io.FileInputStream"/>
+<fullyQualifiedTypeName name="com.google.firebase.FirebaseOptions"/>
+<fullyQualifiedTypeName name="com.google.firebase.auth.FirebaseCredential"/>
+<fullyQualifiedTypeName name="com.google.firebase.auth.FirebaseCredentials"/>
+<fullyQualifiedTypeName name="com.google.firebase.FirebaseApp"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.google.firebase.database.FirebaseDatabase"/>
+<fullyQualifiedTypeName name="com.google.firebase.database.DatabaseReference"/>
+<fullyQualifiedTypeName name="com.google.firebase.database.DataSnapshot"/>
+<fullyQualifiedTypeName name="com.google.firebase.database.DatabaseError"/>
+<fullyQualifiedTypeName name="com.google.firebase.database.ValueEventListener"/>
+<fullyQualifiedTypeName name="com.google.firebase.tasks.Task"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
+<fullyQualifiedTypeName name="com.google.firebase.tasks.Tasks"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="model.User"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,80 @@
+package firebase;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.auth.FirebaseCredentials;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+
+public class DBConnect 
+{
+	public static class User
+	{
+	    public String date_of_birth;
+	    public String full_name;
+	    public String nickname;
+
+	    public User(String date_of_birth, String full_name) 
+	    {
+	        this.date_of_birth = date_of_birth;
+	        this.full_name = full_name;
+	    } // end of constructor
+
+	    public User(String date_of_birth, String full_name, String nickname) 
+	    {
+	    	this.date_of_birth = date_of_birth;
+	        this.full_name = full_name;
+	        this.nickname = nickname;
+	    }// end of constructor
+
+	} // end of User
+
+	
+	public static void main(String[] args) //hrows IOException 
+	{
+		try
+		{
+			FileInputStream serviceAccount = new FileInputStream("CMP-JAVA-PROJECT-d5d296baddd2.json");
+			
+			Map<String, Object> auth = new HashMap<String, Object>();
+			auth.put("uid", "itkoo");
+			
+			FirebaseOptions options = new FirebaseOptions.Builder()
+			.setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
+			.setDatabaseUrl("https://cmp-java-project.firebaseio.com/")
+			.setDatabaseAuthVariableOverride(null)
+			.build();
+
+			FirebaseApp.initializeApp(options);
+
+			System.out.println("Log: 팝파베");
+			
+			final FirebaseDatabase database = FirebaseDatabase.getInstance();
+			DatabaseReference ref = database.getReference("cmp/pratice");
+			
+			DatabaseReference usersRef = ref.child("users");
+
+			Map<String, User> users = new HashMap<String, User>();
+			users.put("alanisawesome", new User("June 23, 1912", "Alan Turing"));
+			users.put("gracehop", new User("December 9, 1906", "Grace Hopper"));
+
+			usersRef.setValue(users);
+
+		} // end of try
+		
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		} // end of catch
+		
+	} // end of main
+} // end of DBConnect
