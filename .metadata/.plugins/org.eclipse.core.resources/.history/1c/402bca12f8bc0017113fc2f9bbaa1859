@@ -1,0 +1,7 @@
+package model;
+
+public class Product 
+{
+	String ItemName;
+
+} // end of Item

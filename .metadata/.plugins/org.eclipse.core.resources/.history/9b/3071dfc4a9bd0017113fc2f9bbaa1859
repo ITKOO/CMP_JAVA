@@ -1,0 +1,312 @@
+package inputItem;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Panel;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
+
+import admin.Admin;
+import firebase.DB;
+import magicpass.MagicPass;
+
+
+public class MenuGUI extends JFrame{
+	DB db = new DB();
+	MagicPass mp;
+	JPanel loadMenu;
+	Admin admin;
+	//상품 코드 (즉 상품의 갯수)
+	int menuCnt=40;
+	int no=1; //db에 저장한 상품 번호
+	int[] n = new int[menuCnt];
+	String txt="";
+	JPanel bagPanel;
+	String pAdress;
+    String pName;
+    String pPrice;
+    String pStock;
+    String pDescription;
+    JButton magicPassBtn;
+    JButton b;
+    JLabel bagF;
+    JLabel bagS;
+    JLabel bagT;
+    String[] rMenu = new String[3]; //장바구니에 담을 수 있는 개수는 3개
+    String[] rpPrice= new String[3];
+    String[] rpStock = new String[3];
+    int bag=0;
+    
+    
+	public  MenuGUI(){
+		super("Menu");
+		
+		for(int i=0;i<menuCnt;i++){
+			n[i]=i;
+		}
+		JFrame frame = new JFrame();
+		frame.setBounds(0, 0, 1024, 768);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		frame.setContentPane(new JLabel(new ImageIcon("main_bg1.jpg")));
+		
+		magicPassBtn = new JButton(new ImageIcon("magicpassBtn.png"));
+		magicPassBtn.setBounds(380, 33, 250, 70);
+		magicPassBtn.setOpaque(false);
+		magicPassBtn.setBorderPainted(false);
+		magicPassBtn.setContentAreaFilled(false);
+		magicPassBtn.setFocusPainted(false);
+		magicPassBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		frame.getContentPane().add(magicPassBtn);
+		magicPassBtn.addMouseListener(new java.awt.event.MouseAdapter() { //예약하기 버튼을 누른 경우
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            	magicPassMouseClicked(evt);
+				
+            }
+        });
+		JLabel noticetxt=new JLabel("NOTICE  - ");
+		noticetxt.setBounds(30, 145,70, 20);
+		noticetxt.setForeground(Color.WHITE);
+		noticetxt.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		frame.getContentPane().add(noticetxt);
+		
+		// 공지사항 띄어지는 부분
+		 admin = new Admin();
+		 db.connectDB();
+		 String noticeContent;
+		 while(noticeContent != null)
+		 {
+			 noticeContent = admin.getNotice();
+		 }
+		 System.out.println(noticeContent);
+		JLabel notice=new JLabel(noticeContent);
+		notice.setBounds(100, 145, 490, 20);
+		notice.setForeground(Color.WHITE);
+		notice.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		frame.getContentPane().add(notice);
+		
+		
+		JLabel bagL=new JLabel("장바구니 목록");
+		bagL.setBounds(630, 140, 90, 30);
+		bagL.setForeground(Color.WHITE);
+		bagL.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		frame.getContentPane().add(bagL);
+		bagPanel=new JPanel();
+		bagPanel.setOpaque(false);
+		bagPanel.setBorder(new LineBorder(Color.white, 1));
+		bagPanel.setBackground(Color.white);
+		bagPanel.setBounds(720, 140, 260, 30);
+		
+		bagF=new JLabel("");
+		bagF.setForeground(Color.WHITE);
+		bagF.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		bagF.addMouseListener(new java.awt.event.MouseAdapter() { //취소 버튼을 누른 경우
+	            public void mouseClicked(java.awt.event.MouseEvent evt) {
+	                	bagF.setText(""); //label을 클릭하면 장바구니삭제
+	                	bag--;
+	            }
+	        });
+		bagS=new JLabel("");
+		bagS.setForeground(Color.WHITE);
+		bagS.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		bagS.addMouseListener(new java.awt.event.MouseAdapter() { //취소 버튼을 누른 경우
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                	bagS.setText("");
+                	bag--;
+            }
+        });
+		
+		bagT=new JLabel("");
+		bagT.setForeground(Color.WHITE);
+		bagT.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		bagT.addMouseListener(new java.awt.event.MouseAdapter() { //취소 버튼을 누른 경우
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                	bagT.setText("");
+                	bag--;
+            }
+        });
+		
+		bagPanel.add(bagF);
+		bagPanel.add(bagS);
+		bagPanel.add(bagT);
+		frame.getContentPane().add(bagPanel);
+		
+		loadMenu= new JPanel();
+		//loadMenu.setBackground(new Color(0,0,0,0));
+		loadMenu.setBackground(Color.yellow);
+		loadMenu.setBounds(0,200,1010,530);
+		loadMenu.setOpaque(false);
+		//loadMenu.setBorder(new LineBorder(Color.white, 1));
+		loadMenu.setLayout(new GridLayout((menuCnt/3)+1, 3));
+		
+		for (int row = 0; row <(menuCnt/3)+1; row++){
+		    for (int col = 0; col < 3; col++){
+		        JPanel panel = new JPanel();
+		        panel.setOpaque(false);
+		        panel.setBackground(Color.yellow);
+		     //   panel.setBackground(new Color(0,0,0,50));
+		        b = new JButton ();
+		       // b.setOpaque(false);
+				b.setBorder(new LineBorder(Color.yellow, 1));
+				b.setBackground(Color.white);
+		        b.setLayout(new FlowLayout());
+		        b.addMouseListener(new java.awt.event.MouseAdapter() { //취소 버튼을 누른 경우
+		            public void mouseClicked(java.awt.event.MouseEvent evt) {
+		                	menuItemMouseClicked(evt);
+		                	System.out.println(pName+pPrice+pStock);
+		                	reserve(pName,pPrice,pStock);
+		            }
+		        });
+		        //select *from 디비명 where ID=no 이케 가져오면 안되나욤..? for문 끝나면 no 증가
+		        //pAdress=db이름.getString(1); 이렇게 하는건가..?
+		        
+		        pAdress="menuImg/10041002.png";
+				pName="꼬깔콘";
+				// b.setName(pName);
+				pPrice="2000";
+				pStock="3";
+				pDescription="롯데에서만든꼬깔콘하하하하하하핳하하하가가";
+				
+				JLabel productA=new JLabel((new ImageIcon(pAdress)));
+		        productA.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		        productA.setPreferredSize(new Dimension(300, 200));
+		        b.add(productA);
+				
+		        JLabel productN=new JLabel("<html><div style='margin:10px'>" + pName + "</div></html>");
+		        productN.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		        productN.setPreferredSize(new Dimension(300, 15));
+		        b.add(productN);
+		        
+		        JLabel productP=new JLabel("<html><div style='margin:10px'>" + pPrice+ "</div></html>");
+		        productP.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		        productP.setPreferredSize(new Dimension(300, 15));
+		        b.add(productP);
+		        
+		        JLabel productS=new JLabel("<html><div style='margin:10px'>" + pStock+ "</div></html>");
+		        productS.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		        productS.setPreferredSize(new Dimension(300, 15));
+		        b.add(productS);
+		        
+		        JLabel productD=new JLabel("<html><div style='margin:10px'>" + pDescription+ "</div></html>");
+		        productD.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		        productD.setPreferredSize(new Dimension(300, 15));
+		        b.add(productD);
+		        
+		        b.setPreferredSize(new Dimension(300, 300));
+		        loadMenu.add(b).setLocation(row, col);
+		        panel.add(b);
+		      //  b.addActionListener(new ButtonEvent(b, system, row, col));
+		        loadMenu.add(panel);
+		        
+		        
+		      //  n[no]=no;
+		    }
+		    no++;
+		}
+		
+		JScrollPane menuScroll=new JScrollPane(loadMenu);
+		menuScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		menuScroll.getViewport().setOpaque(false);
+		menuScroll.setOpaque(false);
+		menuScroll.setBounds(0,200,1010,530);
+		//menuScroll.setWrapStyleWord(true);
+		menuScroll.setOpaque(false);
+		menuScroll.setBorder(new LineBorder(Color.black, 0));
+		//menuScroll.setForeground(Color.white);
+		//menuScroll.setBackground(new Color(0,0,0,0));
+		//loadMenu
+
+		
+		frame.getContentPane().add(menuScroll);
+		
+
+		
+		
+		frame.setVisible(true);
+		
+	}  
+	  private void magicPassMouseClicked(java.awt.event.MouseEvent evt) {  
+		
+		mp = new MagicPass();
+		  System.out.println("예약버튼 누름");
+		// db랑 커넥트( 파베 CMP-JAVA-PROJECT)
+		db.connectDB();
+					
+		// db에 줄서기 누른 데이터 입력
+		mp.getMagicPass();
+		mp.checkMagicPass();
+		
+			// 장바구니에 담은 것이 없는 상태 & 티켓팅 성공
+			  if(bag==0 && mp.suceedMagic() == true)
+			  {
+				  //장바구니에 담은 물건이 없을 경우
+				  JOptionPane.showMessageDialog(null, "예약완료");
+				  JOptionPane.showMessageDialog(null, "CMP 매점 매직패스 성공하셨습니다.");
+				  
+			  } // end of if
+			  
+			  // 티켓팅 실패했을 경우
+			  else if(mp.suceedMagic() == false)
+			  {
+				  JOptionPane.showMessageDialog(null, "CMP 매점 매직패스 실패하셨습니다.");
+			  }
+			  
+			  else
+			  {  
+				  // 3개까지 장바구니 담아서 db 
+				  String bagtxt=bagF.getText()+", "+bagS.getText()+", "+bagT.getText();
+				  JOptionPane.showMessageDialog(null,"장바구니에 담긴 "+bagtxt+" 예약완료");
+			  }
+			 }
+	private void menuItemMouseClicked(java.awt.event.MouseEvent evt) {  
+			//셋te
+	}
+	public void reserve(String rMenu,String rProductP,String rProductS){
+		if(bag<3){
+			if(bag==0)bagF.setText(rMenu);
+			else if(bag==1)bagS.setText(rMenu);
+			else if(bag==2)bagT.setText(rMenu);
+		this.rMenu[bag]=rMenu;
+		this.rpPrice[bag]=rProductP;
+		this.rpStock[bag]=rProductS;
+	//	txt+=this.rMenu[bag];
+		
+		bag++;
+		}
+		else  JOptionPane.showMessageDialog(null, "장바구니는 최대 3개까지 담을 수 있습니다");
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		new  MenuGUI();
+		
+	}
+	}
+

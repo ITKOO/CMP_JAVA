@@ -1,0 +1,21 @@
+package model;
+
+public class Product 
+{
+	String productName;
+	String productPrice;
+	String productStock;
+	String productExplan;
+	
+	//기본 생성자
+	public Product(){}
+	
+	public Product(String productName, String productPrice, String productStock , String productExplan)
+	{
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productExplan = productExplan;
+	} // end of constructor
+
+} // end of Item

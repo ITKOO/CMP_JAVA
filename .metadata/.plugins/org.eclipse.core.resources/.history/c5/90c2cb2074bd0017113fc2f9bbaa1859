@@ -1,0 +1,15 @@
+package model;
+
+public class Code 
+{
+	public String productCode;
+	
+	// 기본 생성자
+	public Code(){}
+	
+	public Code(String productCode)
+	{
+		this.productCode = productCode;
+	} // end of constructor
+
+} // end of Code

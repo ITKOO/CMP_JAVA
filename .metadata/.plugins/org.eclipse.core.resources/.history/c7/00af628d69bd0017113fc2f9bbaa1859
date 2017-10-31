@@ -1,0 +1,15 @@
+package model;
+
+public class MagicPassUser
+{
+	public int count;
+
+	public MagicPassUser(){}
+	
+	public MagicPassUser(int count)
+	{
+		this.count = count;
+	} // end of constructor
+
+	
+} // end of MagicPassUser

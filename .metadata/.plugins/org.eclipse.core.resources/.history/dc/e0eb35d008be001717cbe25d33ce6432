@@ -1,0 +1,10 @@
+package inputItem;
+
+public class Menu 
+{
+	public void getMenu()
+	{
+		
+	} // end of getMenu
+
+} // end of Menu 

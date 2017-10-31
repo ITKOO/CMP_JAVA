@@ -1,0 +1,63 @@
+package magicpass;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+import firebase.DB;
+
+public class MagicPassGUI extends JFrame implements ActionListener
+{
+	// 매직패스 버튼
+	JButton magicPassBtn;
+	
+	// 매직패스 패널
+	JPanel magicPassPanel;
+
+	// 매직 매직 패스 라벨
+	JLabel magicPassLabel;
+	
+	// 메인페이로 돌아가기 라벨
+	JLabel backPageLabel;
+	
+	DB db;
+	MagicPass mp;
+	
+	public MagicPassGUI()
+	{
+		super("MagicPass");
+		
+		magicPassBtn = new JButton("예약 하기");
+		magicPassPanel = new JPanel();
+		magicPassLabel = new JLabel("매점 매직 패스");
+		backPageLabel  = new JLabel("메인 페이지로 돌아가기");
+		
+		
+		magicPassPanel.add(magicPassLabel);
+		magicPassPanel.add(magicPassBtn);
+		magicPassPanel.add(backPageLabel);
+	
+		add(magicPassPanel);
+		
+		setSize(1024, 768);
+		setVisible(true);
+		
+		magicPassBtn.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource() == magicPassBtn)
+		{
+			db.connectDB();
+			mp.saveMagicPassData();
+		}
+	}
+
+	public static void main(String[] args) 
+	{
+		new MagicPassGUI();
+	} // end of main
+	
+} // end of MagicPassGUI

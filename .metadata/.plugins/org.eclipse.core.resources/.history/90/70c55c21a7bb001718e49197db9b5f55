@@ -1,0 +1,91 @@
+package firebase;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.tasks.Task;
+import com.google.firebase.tasks.Tasks;
+
+import model.MagicPassUser;
+
+class MagicPratice
+{
+	// Get a reference to our posts
+	final FirebaseDatabase database = FirebaseDatabase.getInstance();
+	DatabaseReference ref = database.getReference("CMP/MagicPass/");
+	
+	public void pratice()
+	{
+		System.out.println("Log : pratice()");
+		
+		ref.addChildEventListener(new ChildEventListener() 
+		{
+			 public void onChildAdded(DataSnapshot dataSnapshot, String s) 
+			 {
+		            System.out.println("Log : onChildAdded22");
+		            
+		            Map<String, MagicPassUser> getmagicPass = (Map<String, MagicPassUser>) dataSnapshot.getValue();
+		            String count = getmagicPass.get("count").toString();
+		            
+		            System.out.println("Log : count : " + count);
+		            
+		            Task<Void> task = ref.setValue(getmagicPass);
+		            
+		            try 
+		            {
+		            	System.out.println("Log : getMagicPassData() :  await");
+		               Tasks.await(task);
+		            } 
+		            
+		            catch (ExecutionException e) 
+		            {
+		            	e.printStackTrace();
+		            }
+		            
+		            catch(InterruptedException e)
+		            {
+		            	e.printStackTrace();
+		            }
+
+
+		           
+		    } // end of onChildAdded
+
+		   
+		    public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+		    
+		    public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+		    
+		    public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
+
+		    
+		    public void onCancelled(DatabaseError databaseError) {}
+		});
+		
+		
+		
+	} // end of pratice
+} // end of MagicPratice
+
+public class Pratice
+{
+
+	public static void main(String args[])
+	{
+		DB db = new DB();
+		db.connectDB();
+		
+		MagicPratice mp = new MagicPratice();
+		mp.pratice();
+		
+	} // end of main
+	
+} // end of Pratice

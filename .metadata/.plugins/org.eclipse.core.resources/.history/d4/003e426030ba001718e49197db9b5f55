@@ -1,0 +1,34 @@
+package magicpass;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class MagicPassGUI extends JFrame implements ActionListener
+{
+	JButton magicPassBtn = new JButton("예약 하기");
+	JPanel magicPassPanel = new JPanel();
+	
+	public MagicPassGUI()
+	{
+		super("MagicPass");
+		magicPassPanel.add(magicPassBtn);
+		add(magicPassPanel);
+		setSize(300, 150);
+		setVisible(true);
+		
+		magicPassBtn.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource() == magicPassBtn)
+			System.exit(0);
+	}
+
+	public static void main(String[] args) 
+	{
+		new MagicPassGUI();
+	} // end of main
+} // end of MagicPassGUI
