@@ -15,6 +15,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.border.LineBorder;
 
+import com.google.firebase.FirebaseApp;
+
 import admin.AdminGUI;
 import firebase.DB;
 import inputItem.FileCopy;
@@ -210,6 +212,7 @@ public class LoginGUI extends JFrame
 
 				 } // end of else
 			} // end of try
+			
 			
 			catch(Exception n)
 			{

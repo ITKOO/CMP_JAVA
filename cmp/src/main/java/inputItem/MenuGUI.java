@@ -33,6 +33,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 
+import com.google.firebase.FirebaseApp;
+
 import admin.Admin;
 import firebase.DB;
 import magicpass.MagicPass;
@@ -47,7 +49,6 @@ public class MenuGUI extends JFrame{
 	JLabel notice;
 	String noticeContent;
 	//상품 코드 (즉 상품의 갯수)
-
 	int menuCnt;
 	int no=1; //db에 저장한 상품 번호
 	int[] n = new int[menuCnt];
@@ -72,12 +73,15 @@ public class MenuGUI extends JFrame{
 	public  MenuGUI(){
 		super("Menu");
 		db.connectDB();
+		
         menu.getProductCode();
 		menu.getMenu();
 		menuCnt = Integer.parseInt(menu.returnpCode());
-		for(int i=0;i<menuCnt;i++){
-			n[i]=i;
-		}
+		
+		System.out.println("menuCnt : "  + menuCnt);
+//		for(int i=0;i<menuCnt;i++){
+//			n[i]=i;
+//		}
 		JFrame frame = new JFrame();
 		frame.setBounds(0, 0, 1024, 768);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -260,11 +264,12 @@ public class MenuGUI extends JFrame{
 		
 		mp = new MagicPass();
 		  System.out.println("예약버튼 누름");
-		// db랑 커넥트( 파베 CMP-JAVA-PROJECT)
-		db.connectDB();
+//		// db랑 커넥트( 파베 CMP-JAVA-PROJECT)
+//		db.connectDB();
 					
 		// db에 줄서기 누른 데이터 입력
 		mp.getMagicPass();
+		
 		mp.checkMagicPass();
 		
 			// 장바구니에 담은 것이 없는 상태 & 티켓팅 성공

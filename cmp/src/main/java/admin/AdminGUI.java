@@ -50,7 +50,10 @@ public class AdminGUI extends JFrame{
 	public  AdminGUI(){
 		super("AdminGUI");
 		
-		
+		db = new DB();
+	    admin = new Admin();
+	    db.connectDB();
+	     
 		frame = new JFrame();
 		frame.setBounds(0, 0, 1024, 768);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,6 +71,9 @@ public class AdminGUI extends JFrame{
 		noticetxt2.setBounds(100, 308, 490, 20);
 		noticetxt2.setForeground(Color.WHITE);
 		noticetxt2.setFont(new Font("맑은 고딕", Font.BOLD, 13));
+		//admin.getNotice();
+		//System.out.println("!!!!!!!!!!!!!!" + admin.getNotice());
+		noticetxt2.setText(admin.getNotice());	
 		frame.getContentPane().add(noticetxt2);
 		
 
@@ -134,15 +140,14 @@ public class AdminGUI extends JFrame{
 		 frame.setVisible(false);
 	  }
 	  private void addNoticeMouseClicked(java.awt.event.MouseEvent evt) {
-			  db = new DB();
-		      admin = new Admin();
+			
 			  System.out.println("공지사항 추가 버튼 누름");
+			  
 			  if(notice.getText().length()<35)
 			  {
-				 db.connectDB();
 				 admin.uploadNotice(notice.getText());
-				 admin.getNotice();
-				 noticetxt2.setText(admin.getNotice());
+				
+				 noticetxt2.setText(admin.getNotice());	
 				 notice.setText("");
 			  }
 		  else 

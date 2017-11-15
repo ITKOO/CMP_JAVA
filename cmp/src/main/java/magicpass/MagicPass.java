@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.JOptionPane;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,9 +86,16 @@ public class MagicPass
 		{
 			Thread.sleep(8000);
 		} 
+		
+		catch(IllegalStateException e)
+		{
+			FirebaseApp.getInstance().delete();
+			getMagicPass();
+		}
 		catch (InterruptedException e) 
 		{
 			e.printStackTrace();
+			 
 		}
 		
 		System.out.println("Log : count : " + mpUser.count);

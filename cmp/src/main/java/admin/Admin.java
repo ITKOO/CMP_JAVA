@@ -2,6 +2,7 @@ package admin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,6 +21,8 @@ public class Admin
 {
 	Notice no;
 	String noticeContent;
+	CountDownLatch latch = new CountDownLatch(1);
+	
 	public void uploadNotice(String notice)
 	{
 		 final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -69,25 +72,50 @@ public class Admin
 		        //System.out.println("no : " + no);
 		        //System.out.println("no.notice : " + no.notice);
 		        noticeContent = no.notice;
-		        System.out.println("noticeContent : " + noticeContent);
+		        System.out.println("getNotice -> noticeContent : " + noticeContent);   
+		        latch.countDown();
 		    }
 
 		    public void onCancelled(DatabaseError databaseError) 
 		    {
+		    	latch.countDown();
 		        System.out.println("The read failed: " + databaseError.getCode());
 		    }
 		}); // end of addValueEventListener
 		
-		try 
+		try
 		{
-			Thread.sleep(2000);
-		} 
+			latch.await();
+			
+		}
+		
 		catch (InterruptedException e) 
 		{
 			e.printStackTrace();
 		}
+		
 		return noticeContent;
+		
 	}  // end of getNotice
+	
+	
+	public String returnNoticeContent()
+	{
+		System.out.println("returnNoticeContent -> noticeContent : " + noticeContent);
+		
+		try
+		{
+			latch.await();
+		}
+		
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		return noticeContent;
+		
+	} // end of noticeContent
 	
 	
 } // end of Admin

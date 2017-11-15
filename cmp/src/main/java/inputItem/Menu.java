@@ -1,5 +1,6 @@
 package inputItem;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -88,7 +89,7 @@ public class Menu
 			    	p_price = p.productPrice;
 			    	p_stock = p.productStock;
 			    	p_explan = p.productExplan;
-
+			    	
 			    }
 
 			    public void onCancelled(DatabaseError databaseError) 
@@ -100,8 +101,10 @@ public class Menu
 			try 
 			{
 				Thread.sleep(8000);
-				
 			} 
+			
+			
+			
 			catch (InterruptedException e) 
 			{
 				e.printStackTrace();

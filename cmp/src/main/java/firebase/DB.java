@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 import com.google.firebase.FirebaseApp;
@@ -29,6 +30,7 @@ public class DB
 	MagicPassUser mpUser;
 	Code code;
 	Notice noti;
+	//CountDownLatch latch = new CountDownLatch(1);
 	
 	public void connectDB()
 	{
@@ -43,12 +45,26 @@ public class DB
 
 	        FirebaseApp.initializeApp(options);
 	        System.out.println("Log : connectDB!");
+	        //latch.countDown();
+	       
 		}
-		
+
 		catch(IOException ie)
 		{
 			ie.printStackTrace();
 		}
+		/*
+		try
+		{
+			latch.await();
+		}
+		
+		catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		*/
+		
 	} // end of connectDB
 	
 	public void saveData()
@@ -124,7 +140,11 @@ public class DB
 		DB db = new DB();
 		db.connectDB();
 		//db.saveData();
-		db.getData();	
+		//db.getData();
+		
+		UploadItem up = new UploadItem();
+		
+		up.uploadItemData("menuImg/오징어집.jpg", "오징어집", "1400", "6", "입에 3개를 동시에 넣어 먹어보세요!");
 	
 		
 

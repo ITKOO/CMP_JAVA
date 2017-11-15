@@ -4,7 +4,6 @@
 <fullyQualifiedTypeName name="com.google.firebase.FirebaseOptions"/>
 <fullyQualifiedTypeName name="com.google.firebase.auth.FirebaseCredential"/>
 <fullyQualifiedTypeName name="com.google.firebase.auth.FirebaseCredentials"/>
-<fullyQualifiedTypeName name="com.google.firebase.FirebaseApp"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="com.google.firebase.tasks.Task"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ExecutionException"/>
@@ -31,9 +30,10 @@
 <fullyQualifiedTypeName name="firebase.DB"/>
 <fullyQualifiedTypeName name="admin.AdminGUI"/>
 <fullyQualifiedTypeName name="inputItem.MenuGUI"/>
-<fullyQualifiedTypeName name="inputItem.UploadItem"/>
 <fullyQualifiedTypeName name="inputItem.UploadItemGUI"/>
 <fullyQualifiedTypeName name="signup.SignUpGUI"/>
 <fullyQualifiedTypeName name="java.awt.Frame"/>
 <fullyQualifiedTypeName name="login.LoginGUI"/>
+<fullyQualifiedTypeName name="inputItem.UploadItem"/>
+<fullyQualifiedTypeName name="com.google.firebase.FirebaseApp"/>
 </qualifiedTypeNameHistroy>
