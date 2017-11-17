@@ -1,0 +1,37 @@
+package firebase;
+
+import javax.servlet.ServletContextListener;
+
+
+
+public class MyServletContextListener implements ServletContextListener{
+
+	public void contextInitialized(ServletContextEvent event)
+
+        {
+
+		//DB연결이라면 초기화 코딩, 객체 컨텍스트에 담기.
+
+		ServletContext sc = event.getServletContext();	        //이벤트에게 컨텍스트를 얻어온다
+
+		String value = sc.getInitParameter("test");		        //컨텍스트에서 초기화 파라미터를 읽는다
+
+		Dog dog = new Dog(value);						//일반 자바객체를 만들고
+
+		sc.setAttribute("dog",dog);						//콘텍스트에 저장한다.
+
+	}	
+
+				
+
+	public void contextDestroyed(ServletContextEvent event)
+
+       {
+
+	//	DB연결이라면 해제코딩, 객체라면 할 일 없음. 컨텍스트가 소멸된다는 것은 모든 애플리 케이션이 
+
+        //    소모 되고 Dog객체도 사라질것이기 때문이다.?? 모든 어플리케이션이 소모될 거라면 DB연결도 자동으로 끊김..
+
+	}
+
+}	

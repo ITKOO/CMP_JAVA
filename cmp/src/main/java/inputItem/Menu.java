@@ -1,5 +1,7 @@
 package inputItem;
 
+import java.util.concurrent.CountDownLatch;
+
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +28,9 @@ public class Menu
 	DatabaseReference pCodeRef;
 	DatabaseReference resetRef;
 	
-	public void getProductCode()
+	CountDownLatch latch = new CountDownLatch(1);
+	
+	public String getProductCode()
 	{
 		final FirebaseDatabase database = FirebaseDatabase.getInstance();
 		System.out.println("1. getProductCode");
@@ -42,23 +46,29 @@ public class Menu
 		    	System.out.println("Code : " + code);
 		        System.out.println("code.productCode : " + code.productCode);
 		        pCode = code.productCode;
+		        latch.countDown();
 		    }
 
 		    public void onCancelled(DatabaseError databaseError) 
 		    {
 		        System.out.println("The read failed: " + databaseError.getCode());
+		        latch.countDown();
 		    }
 		});
 
-		try 
+		try
 		{
-			Thread.sleep(8000);
+			latch.await();
 			
-		} 
+			
+		}
+		
 		catch (InterruptedException e) 
 		{
 			e.printStackTrace();
 		}
+		
+		return pCode;
 	} // end of getProductCode
 	
 
@@ -90,20 +100,22 @@ public class Menu
 			    	p_stock = p.productStock;
 			    	p_explan = p.productExplan;
 			    	
+			    	latch.countDown();
+			    	
 			    }
 
 			    public void onCancelled(DatabaseError databaseError) 
 			    {
 			        System.out.println("The read failed: " + databaseError.getCode());
+			        latch.countDown();
 			    }
 			});
 
-			try 
+			try
 			{
-				Thread.sleep(8000);
-			} 
-			
-			
+				latch.await();
+				
+			}
 			
 			catch (InterruptedException e) 
 			{

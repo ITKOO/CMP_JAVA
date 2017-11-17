@@ -27,7 +27,6 @@
 <fullyQualifiedTypeName name="model.Code"/>
 <fullyQualifiedTypeName name="model.Notice"/>
 <fullyQualifiedTypeName name="admin.Admin"/>
-<fullyQualifiedTypeName name="firebase.DB"/>
 <fullyQualifiedTypeName name="admin.AdminGUI"/>
 <fullyQualifiedTypeName name="inputItem.MenuGUI"/>
 <fullyQualifiedTypeName name="inputItem.UploadItemGUI"/>
@@ -35,5 +34,7 @@
 <fullyQualifiedTypeName name="java.awt.Frame"/>
 <fullyQualifiedTypeName name="login.LoginGUI"/>
 <fullyQualifiedTypeName name="inputItem.UploadItem"/>
+<fullyQualifiedTypeName name="java.util.concurrent.CountDownLatch"/>
+<fullyQualifiedTypeName name="firebase.DB"/>
 <fullyQualifiedTypeName name="com.google.firebase.FirebaseApp"/>
 </qualifiedTypeNameHistroy>

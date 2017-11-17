@@ -1,45 +1,22 @@
 package admin;
 
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Panel;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
-
 import firebase.DB;
-import inputItem.FileCopy;
+
 import inputItem.MenuGUI;
-import inputItem.UploadItem;
 import inputItem.UploadItemGUI;
 
-public class AdminGUI extends JFrame{
+public class AdminGUI extends JFrame
+{
 	JButton addNotice;
 	JLabel noticetxt2;
 	JTextArea notice;
@@ -47,14 +24,16 @@ public class AdminGUI extends JFrame{
 	DB db;
 	Admin admin;
 
-	public  AdminGUI(){
+	public  AdminGUI()
+	{
 		super("AdminGUI");
-		
+
 		db = new DB();
 	    admin = new Admin();
+	    //Firebase DB와 연결
 	    db.connectDB();
 	     
-		frame = new JFrame();
+	    frame = new JFrame();
 		frame.setBounds(0, 0, 1024, 768);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -71,9 +50,6 @@ public class AdminGUI extends JFrame{
 		noticetxt2.setBounds(100, 308, 490, 20);
 		noticetxt2.setForeground(Color.WHITE);
 		noticetxt2.setFont(new Font("맑은 고딕", Font.BOLD, 13));
-		//admin.getNotice();
-		//System.out.println("!!!!!!!!!!!!!!" + admin.getNotice());
-		noticetxt2.setText(admin.getNotice());	
 		frame.getContentPane().add(noticetxt2);
 		
 
@@ -104,7 +80,7 @@ public class AdminGUI extends JFrame{
 		menu.setBorderPainted(false);
 		menu.setContentAreaFilled(false);
 		menu.setFocusPainted(false);
-		menu.setBounds(310, 434, 140, 180);
+		menu.setBounds(210, 434, 140, 180);
 		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		frame.getContentPane().add(menu);
 		menu.addMouseListener(new java.awt.event.MouseAdapter() { //예약 버튼을 누른 경우
@@ -119,7 +95,7 @@ public class AdminGUI extends JFrame{
 		reservation.setBorderPainted(false);
 		reservation.setContentAreaFilled(false);
 		reservation.setFocusPainted(false);
-		reservation.setBounds(590, 440, 130, 170);
+		reservation.setBounds(450, 440, 130, 170);
 		reservation.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		frame.getContentPane().add(reservation);
 		reservation.addMouseListener(new java.awt.event.MouseAdapter() { //예약 버튼을 누른 경우
@@ -129,34 +105,63 @@ public class AdminGUI extends JFrame{
         });
 		frame.setVisible(true);
 		
-	}    
+
+	JButton manual = new JButton(new ImageIcon("manual.jpg"));
+	manual.setBackground(Color.white);
+	manual.setOpaque(false);
+	manual.setBorderPainted(false);
+	manual.setContentAreaFilled(false);
+	manual.setFocusPainted(false);
+	manual.setBounds(680, 438, 140, 180);
+	manual.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+	frame.getContentPane().add(manual);
+	manual.addMouseListener(new java.awt.event.MouseAdapter() { //예약 버튼을 누른 경우
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+        	manualMouseClicked(evt);
+        }
+    });
+	frame.setVisible(true);
+	
+}    
+	
+	
 	private void menuMouseClicked(java.awt.event.MouseEvent evt) {
 		 System.out.println("메뉴 누름");
 		 new MenuGUI();
+		 frame.setVisible(false);
 	  }
 	  private void reservationMouseClicked(java.awt.event.MouseEvent evt) {
 		 System.out.println("예약 누름");
 		 new UploadItemGUI();
 		 frame.setVisible(false);
 	  }
-	  private void addNoticeMouseClicked(java.awt.event.MouseEvent evt) {
-			
-			  System.out.println("공지사항 추가 버튼 누름");
+	  private void manualMouseClicked(java.awt.event.MouseEvent evt) {
+			 System.out.println("메뉴얼 누름");
+			 new manual.ManualGUI();
+			 frame.setVisible(false);
+		  }
+	  
+	  private void addNoticeMouseClicked(java.awt.event.MouseEvent evt) 
+	  {
+		  System.out.println("공지사항 추가 버튼 누름");
 			  
-			  if(notice.getText().length()<35)
-			  {
-				 admin.uploadNotice(notice.getText());
-				
-				 noticetxt2.setText(admin.getNotice());	
-				 notice.setText("");
-			  }
+		  if(notice.getText().length()<35)
+		  {
+			//DB에 새로운 공지사항을 올려줌
+			admin.uploadNotice(notice.getText());
+			//DB에서 공지사항을 가져와서 띄어줌
+			noticetxt2.setText(admin.getNotice());	
+			notice.setText("");
+		  }
+		  
 		  else 
 			  JOptionPane.showMessageDialog(null, "공지사항은 35자내로 등록해주세요");
-		  }
+	   }
 	 
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		// TODO Auto-generated method stub
 		new  AdminGUI();
 		
-	}
-	}
+	} // end of main
+} // end of AdminGUI

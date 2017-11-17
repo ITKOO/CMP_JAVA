@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="예약" key="selection"/>
+		<item value="db" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="tDB"/>
+			<item value="DB"/>
+			<item value="connectDB"/>
 			<item value="예약"/>
 			<item value="no"/>
-			<item value="DB"/>
 			<item value="꼬깔"/>
 			<item value="MouseClicked"/>
 			<item value="로그인"/>
-			<item value="SignUp"/>
-			<item value="회원가입"/>
 		</list>
 		<list key="replacehistory">
 		</list>

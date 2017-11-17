@@ -99,23 +99,4 @@ public class Admin
 	}  // end of getNotice
 	
 	
-	public String returnNoticeContent()
-	{
-		System.out.println("returnNoticeContent -> noticeContent : " + noticeContent);
-		
-		try
-		{
-			latch.await();
-		}
-		
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
-		
-		return noticeContent;
-		
-	} // end of noticeContent
-	
-	
 } // end of Admin

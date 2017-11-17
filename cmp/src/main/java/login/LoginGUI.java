@@ -27,14 +27,18 @@ public class LoginGUI extends JFrame
 {
 	JTextArea inputStudentN;
 	JPasswordField inputPassword;
-	DB db;
+	DB db = new DB();
 	Login login;
 	JFrame frame;
-	  
+	String sStudentN;
+	
 	
 	public  LoginGUI()
 	{
 		super("로그인");
+		
+		
+		login = new Login();
 		
 		
 	    frame = new JFrame();
@@ -113,6 +117,7 @@ public class LoginGUI extends JFrame
 	
 	  private void logInMouseClicked(java.awt.event.MouseEvent evt) 
 	  {
+
 		  boolean check=true;
 			try
 			{
@@ -123,7 +128,7 @@ public class LoginGUI extends JFrame
 					  
 			    else
 				{
-					String sStudentN=inputStudentN.getText().toString();
+					sStudentN=inputStudentN.getText().toString();
 					String sPassword=inputPassword.getText().toString();
 					
 					
@@ -179,47 +184,59 @@ public class LoginGUI extends JFrame
 							  JOptionPane.showMessageDialog(null, "비밀번호는 최대 6자리입니다");
 							  check=false;
 						  }
-						  db = new DB();
-						login = new Login();
-						db.connectDB();
+						db.connectDB(); 
+						
 						login.getLogin(sStudentN, sPassword);
 						
-						  if(check==true && login.isLoginUser() == true )
-						  { 
-							  //유효성을 모두 만족하는 경우만 로그인
-							 System.out.println("학번:"+sStudentN); //학번
-							 System.out.println("비밀번호:"+sPassword); //비밀번호	
-							  
-							  JOptionPane.showMessageDialog(null, "CMP에 로그인 되셨습니다!");
-							  
-							if(sStudentN.equals("7777"))
+						if(login.isLoginUser() == true)
+						{
+							System.out.println("학번:"+sStudentN); //학번
+							 System.out.println("비밀번호:"+sPassword); //비밀번호
+							 JOptionPane.showMessageDialog(null, "CMP에 로그인 되셨습니다!");
+							 
+							 if(sStudentN.equals("7777"))
 							  {
 								  new AdminGUI();
 								  frame.setVisible(false);
 							  }
+							
+						}
+						
+						  if(check==true && login.isLoginUser() == true)
+						  { 
+							  //유효성을 모두 만족하는 경우만 로그인
+							 System.out.println("학번:"+sStudentN); //학번
+							 System.out.println("비밀번호:"+sPassword); //비밀번호
+							 JOptionPane.showMessageDialog(null, "CMP에 로그인 되셨습니다!");
+							 new MenuGUI();
+							 frame.setVisible(false);
+
 							  
-							  else
-							  {
-								  new MenuGUI();
-								  frame.setVisible(false);
-							  }
-							  
-						  }
+						  } // end of if
+						  
 						  else
 						  {
 							  JOptionPane.showMessageDialog(null, "아이디 또는 비밀번호가 올바르지 않습니다.");
-						  }
+						  } // end of else 
 
 				 } // end of else
+							 
 			} // end of try
 			
+			catch(IllegalStateException n)
+			{
+				System.out.println("헤헤헤헤 흑..");
+				System.out.println(n.toString());
+				n.printStackTrace();
+				
+		    } // end of catch
 			
 			catch(Exception n)
 			{
 				System.out.println("오류");
-				 System.out.println(n.toString());
+				System.out.println(n.toString());
 		    } // end of catch
-			
+
 	  } // end of logInMouseClicked
 	  
 	  public static boolean isStringDouble(String s) 
@@ -242,10 +259,11 @@ public class LoginGUI extends JFrame
 		 new SignUpGUI();
 		 frame.setVisible(false);
 	 }
-	public static void main(String[] args) 
-	{
+	 
+	 public static void main(String[] args) 
+	 {
 		// TODO Auto-generated method stub
 		new  LoginGUI();
 		
-	} // end of main
+	 } // end of main
 } // end of LoginGUI

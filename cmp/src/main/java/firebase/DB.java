@@ -30,8 +30,7 @@ public class DB
 	MagicPassUser mpUser;
 	Code code;
 	Notice noti;
-	//CountDownLatch latch = new CountDownLatch(1);
-	
+
 	public void connectDB()
 	{
 		try
@@ -42,10 +41,11 @@ public class DB
 	          .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
 	          .setDatabaseUrl("https://cmp-java-project.firebaseio.com/")
 	          .build();
-
+	      
 	        FirebaseApp.initializeApp(options);
+	       
+	        
 	        System.out.println("Log : connectDB!");
-	        //latch.countDown();
 	       
 		}
 
@@ -53,17 +53,7 @@ public class DB
 		{
 			ie.printStackTrace();
 		}
-		/*
-		try
-		{
-			latch.await();
-		}
-		
-		catch (InterruptedException e) 
-		{
-			e.printStackTrace();
-		}
-		*/
+
 		
 	} // end of connectDB
 	
