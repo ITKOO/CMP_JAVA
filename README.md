@@ -19,8 +19,9 @@ Back-end 개발 : @ITKOO
 
 Screenshots
 ----------------------------------------
+![default](https://user-images.githubusercontent.com/31758135/43297039-dc45ef7a-9189-11e8-9f15-7a4fcd5b0577.png)
 ![default](https://user-images.githubusercontent.com/31758135/43297036-dbd9a7c0-9189-11e8-9c08-a7df466d912b.png)
 ![default](https://user-images.githubusercontent.com/31758135/43297037-dbfba870-9189-11e8-8ab3-f63e2c27d1ca.png)
 ![default](https://user-images.githubusercontent.com/31758135/43297038-dc204f22-9189-11e8-8f03-0e61eb78a5c5.png)
-![default](https://user-images.githubusercontent.com/31758135/43297039-dc45ef7a-9189-11e8-9f15-7a4fcd5b0577.png)
+
 
